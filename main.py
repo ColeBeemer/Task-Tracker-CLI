@@ -1,12 +1,22 @@
-import time
 import sys
 import shlex
 import commands
-
-TASKS = {}
+import json
 
 def main():
-    i = int(0)
+
+    TASKS = {}
+
+    with open("TASKS.json") as f:
+        y = f.read()
+        if not y:
+            i = int(0)
+        else:
+            TASKS = json.loads(y)
+            key = list(TASKS.keys())
+            key.reverse()
+            i = int(key[0])
+
     while True:
         choice = input()
 
@@ -24,7 +34,7 @@ def main():
                 print("No task inputted. Type 'help' to show list of commands")
                 continue
             elif length > 2:
-                print('Too many inputs. For tasks with more than one word, use quotations. Ex. "<task>"')
+                print('Too many inputs. For TASKS with more than one word, use quotations. Ex. "<task>"')
                 continue
             else:
                 i += 1
@@ -38,7 +48,7 @@ def main():
                 print("No id or new description inputted. Type 'help' to show list of commands")
                 continue
             if length == 2 or length > 3:
-                print('Incorrect amount of values. For tasks with more than one word, use quotations. Ex. "<task>"')
+                print('Incorrect amount of values. For TASKS with more than one word, use quotations. Ex. "<task>"')
                 continue
             else:
                 id = int(parsed[1])
@@ -87,7 +97,7 @@ def main():
 
         elif command == "LIST":
             if length == 1:
-                commands.list_tasks(TASKS)
+                commands.list_TASKS(TASKS)
                 continue
             elif length > 2:
                 print("Too many values inputted. Type 'help' to show a list of commands")
@@ -95,7 +105,7 @@ def main():
 
             status = parsed[1].lower()
             if status == "todo" or status == "in-progress" or status == "done":
-                commands.list_tasks(TASKS, status)
+                commands.list_TASKS(TASKS, status)
             else:
                 print("Incorrect status. Use 'todo', 'in-progress', or 'done'")
 
@@ -113,6 +123,11 @@ def main():
             print("Invalid command. Type 'help' to show a list of commands")
 
         parsed.clear()
+
+        x = json.dumps(TASKS)
+
+        with open("TASKS.json", "wt") as f:
+            f.write(x)
 
 if __name__ == "__main__":
     main()

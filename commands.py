@@ -30,11 +30,11 @@ def mark_done(TASKS, id):
     TASKS[id]["status"] = "done"
     TASKS[id]["updatedAt"] = readable_time
 
-def list_tasks(TASKS, status=None):
+def list_TASKS(TASKS, status=None):
     j = 0
 
     if not TASKS:
-        print("No tasks. Add tasks using 'add <task>'")
+        print("No TASKS. Add TASKS using 'add <task>'")
         return
 
     if status:
@@ -47,7 +47,7 @@ def list_tasks(TASKS, status=None):
                 print(f"\tLast updated: {TASKS[i]["updatedAt"]}\n")
                 j += 1
         if j < 1:
-            print(f"No tasks with status '{status}'")
+            print(f"No TASKS with status '{status}'")
 
     else:
         for i in TASKS:
@@ -61,10 +61,10 @@ def list_tasks(TASKS, status=None):
 def show_help():
     print("\nList of commands:")
     print("\t- add <task>:                      Adds a new task")
-    print("\t- update <id> <new description>:   Updates a tasks description")
+    print("\t- update <id> <new description>:   Updates a TASKS description")
     print("\t- delete <id>:                     Deletes a task")
     print("\t- mark-in-progress <id>:           Change status of task to in-progress")
     print("\t- mark-done <id>:                  Change status of task to done")
-    print("\t- list:                            Lists all the tasks")
-    print("\t- list <status>:                   Lists all tasks with specified status")
+    print("\t- list:                            Lists all the TASKS")
+    print("\t- list <status>:                   Lists all TASKS with specified status")
     print("\t- exit:                            Exit the program\n")
