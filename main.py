@@ -1,32 +1,35 @@
-import sys
-import shlex
-import commands
-import json
+import sys          # For exiting the program
+import shlex        # For parsing user input
+import commands     # Extra file with methods for commands
+import json         # For importing/exporting JSON file
 
 def main():
 
-    TASKS = {}
+    TASKS = {}  # Initialize empty dictionary for TASKS
 
+    # Open file
     with open("TASKS.json") as f:
-        y = f.read()
+        y = f.read()    # Read the JSON
         if not y:
-            i = int(0)
+            i = int(0)  # If JSON file is empty, set initial ID to 0
         else:
-            TASKS = json.loads(y)
-            key = list(TASKS.keys())
-            key.reverse()
-            i = int(key[0])
+            TASKS = json.loads(y)       # load JSON file into TASKS
+            key = list(TASKS.keys())    # Get just the keys into a list
+            key.reverse()               # Flip the list so the last key is first
+            i = int(key[0])             # Set initial ID to the first key in the list
 
     while True:
-        choice = input()
+        choice = input("> ")
 
         if not choice:
             print("No command entered. Type 'help' to show list of commands")
             continue
 
-        parsed = shlex.split(choice)
-        length = int(len(parsed))
-        command = parsed[0].upper()
+        parsed = shlex.split(choice)    # Grab the input and turn into a list
+        length = int(len(parsed))       # Get the length for error handling
+        command = parsed[0].upper()     # The first item in the input is the command
+
+        # ===== COMMANDS =====
 
         if command == "ADD":
 
@@ -46,12 +49,10 @@ def main():
 
             if length == 1:
                 print("No id or new description inputted. Type 'help' to show list of commands")
-                continue
-            if length == 2 or length > 3:
+            elif length == 2 or length > 3:
                 print('Incorrect amount of values. For TASKS with more than one word, use quotations. Ex. "<task>"')
-                continue
             else:
-                id = int(parsed[1])
+                id = parsed[1]
                 task = parsed[2]
                 commands.update(TASKS, id, task)
                 print(f"Task (ID: {id}) updated to {task}")
@@ -65,7 +66,7 @@ def main():
                 print("Too many values inputted. Type 'help' to show list of commands")
                 continue
             else:
-                id = int(parsed[1])
+                id = parsed[1]
                 commands.delete(TASKS, id)
                 print(f"Task (ID: {id}) deleted successfully")
 
@@ -78,7 +79,7 @@ def main():
                 print("Too many values inputted. Type 'help' to show list of commands")
                 continue
             else:
-                id = int(parsed[1])
+                id = parsed[1]
                 commands.mark_in_progress(TASKS, id)
                 print(f"Task (ID: {id}) marked as in-progress")
 
@@ -91,7 +92,7 @@ def main():
                 print("Too many values inputted. Type 'help' to show list of commands")
                 continue
             else:
-                id = int(parsed[1])
+                id = parsed[1]
                 commands.mark_done(TASKS, id)
                 print(f"Task (ID: {id}) marked as done")
 

@@ -3,7 +3,7 @@ import time
 def add(TASKS, task, i):
     readable_time = time.ctime()
     TASKS.update({
-        i : {
+        str(i) : {
             "id" : i,
             "description" : task,
             "status" : "todo",
@@ -14,21 +14,21 @@ def add(TASKS, task, i):
 
 def update(TASKS, id, task):
     readable_time = time.ctime()
-    TASKS[id]["description"] = task
-    TASKS[id]["updatedAt"] = readable_time
+    TASKS[str(id)]["description"] = task
+    TASKS[str(id)]["updatedAt"] = readable_time
 
 def delete(TASKS, id):
-    del TASKS[id]
+    del TASKS[str(id)]
 
 def mark_in_progress(TASKS, id):
     readable_time = time.ctime()
-    TASKS[id]["status"] = "in-progress"
-    TASKS[id]["updatedAt"] = readable_time
+    TASKS[str(id)]["status"] = "in-progress"
+    TASKS[str(id)]["updatedAt"] = readable_time
 
 def mark_done(TASKS, id):
     readable_time = time.ctime()
-    TASKS[id]["status"] = "done"
-    TASKS[id]["updatedAt"] = readable_time
+    TASKS[str(id)]["status"] = "done"
+    TASKS[str(id)]["updatedAt"] = readable_time
 
 def list_TASKS(TASKS, status=None):
     j = 0
